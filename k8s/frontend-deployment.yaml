@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: watchworth-frontend
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: watchworth-frontend
+  template:
+    metadata:
+      labels:
+        app: watchworth-frontend
+    spec:
+      containers:
+        - name: watchworth-frontend
+          image: cvsudeep/watchworthreact:latest
+          # imagePullPolicy: Never
+          ports:
+            - containerPort: 80
+          env:
+            - name: VITE_API_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: watchworth-frontend-config
+                  key: VITE_API_URL
+            - name: VITE_NOEMBED_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: watchworth-frontend-config
+                  key: VITE_NOEMBED_URL

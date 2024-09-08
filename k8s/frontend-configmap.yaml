@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: watchworth-frontend-config
+  namespace: default
+data:
+  VITE_API_URL: "http://backend.watchworth.com"
+  VITE_NOEMBED_URL: "https://noembed.com/embed?url="
