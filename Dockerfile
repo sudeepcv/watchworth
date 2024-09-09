@@ -30,7 +30,7 @@ COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 # Make entrypoint script executable
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
-COPY httpd.conf /usr/local/apache2/conf/httpd.conf
+
 
 
 # Set entrypoint
