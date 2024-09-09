@@ -18,7 +18,7 @@ spec:
           image: cvsudeep/watchworthreact:latest
           # imagePullPolicy: Never
           ports:
-            - containerPort: 8080
+            - containerPort: 80
           env:
             - name: VITE_API_URL
               valueFrom:

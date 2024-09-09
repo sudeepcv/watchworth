@@ -37,4 +37,4 @@ RUN chmod +x /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
 # Expose port 8080 to serve the application
-EXPOSE 8080
+EXPOSE 80

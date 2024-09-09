@@ -22,7 +22,7 @@ docker run \
   --name watchworthreact \
   -e VITE_API_URL=http://localhost:8080 \
   -e VITE_NOEMBED_URL='https://noembed.com/embed?url=' \
-  -p 8081:8080 \
+  -p 8081:80 \
   cvsudeep/watchworthreact
   ```
 
