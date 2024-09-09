@@ -30,8 +30,11 @@ COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 # Make entrypoint script executable
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
+COPY httpd.conf /usr/local/apache2/conf/httpd.conf
+
+
 # Set entrypoint
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
-# Expose port 80 to serve the application
-EXPOSE 80
+# Expose port 8080 to serve the application
+EXPOSE 8080
