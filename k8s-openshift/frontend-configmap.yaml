@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: watchworth-frontend-config
+data:
+  VITE_API_URL: "https://watchworth-backend-sudeepcv007-dev.apps.sandbox-m3.1530.p1.openshiftapps.com"
+  VITE_NOEMBED_URL: "https://noembed.com/embed?url="

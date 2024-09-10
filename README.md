@@ -64,3 +64,7 @@ Once deployed, you can access the frontend application using the following URL:
 
 http://frontend.watchworth.com
 Ensure that you have configured your Ingress controller and DNS settings correctly for this URL to work .
+
+hosted on redhat openshift k8s:
+
+https://watchworth-frontend-sudeepcv007-dev.apps.sandbox-m3.1530.p1.openshiftapps.com/
