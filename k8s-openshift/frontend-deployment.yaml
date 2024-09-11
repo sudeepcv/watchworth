@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: watchworth-frontend
 spec:
-  replicas: 1
+  replicas: 2  
   selector:
     matchLabels:
       app: watchworth-frontend
@@ -15,7 +15,6 @@ spec:
       containers:
         - name: watchworth-frontend
           image: cvsudeep/watchworthreact:latest
-          # imagePullPolicy: Never
           ports:
             - containerPort: 8080
           env:
@@ -29,3 +28,22 @@ spec:
                 configMapKeyRef:
                   name: watchworth-frontend-config
                   key: VITE_NOEMBED_URL
+          readinessProbe:  # Ensure pod is ready before it is considered healthy
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe:  # Ensure pod is restarted if it becomes unresponsive
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          resources:  # Optional: Add resource requests and limits to prevent resource-related issues
+            requests:
+              memory: "128Mi"
+              cpu: "250m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
