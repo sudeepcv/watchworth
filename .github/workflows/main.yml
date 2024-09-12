@@ -6,7 +6,7 @@ on:
       - main  # Deploy when there's a push to the main branch
 
   schedule:
-    - cron: "*/2 * * * *"  # Deploy every 2 minutes (for testing)
+    - cron: "*/10 * * * *" 
 
 jobs:
   deploy:
