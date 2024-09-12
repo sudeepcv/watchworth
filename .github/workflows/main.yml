@@ -43,4 +43,4 @@ jobs:
 
     - name: Verify Deployment Rollout
       run: |
-        oc rollout status deployment/watchworth
+        oc rollout status deployment/watchworth-frontend
