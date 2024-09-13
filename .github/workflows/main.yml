@@ -1,12 +1,13 @@
+# GitHub Actions workflow
+
 name: Deploy to OpenShift Sandbox
 
 on:
   push:
     branches:
       - main  # Deploy when there's a push to the main branch
-
   schedule:
-    - cron: "* */10 * * *" 
+    - cron: "* */10 * * *"  # Schedule to run every 10 hours
 
 jobs:
   deploy:
@@ -27,20 +28,42 @@ jobs:
         tar -xvzf oc.tar.gz
         sudo mv oc /usr/local/bin/
 
+    # Step 1: Set up Docker Buildx (for multi-platform builds)
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    # Step 2: Log in to Docker Hub
+    - name: Log in to Docker Hub
+      run: |
+        echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}  # Docker Hub token stored in repository secrets
+
+    # Step 3: Build and push Docker image for amd64 and arm64 platforms
+    - name: Build and Push Multi-Platform Docker Image
+      run: |
+        docker buildx create --use
+        docker buildx build --platform linux/amd64,linux/arm64 -t ${{ secrets.DOCKERHUB_USERNAME }}/watchworth-backend:latest --push .
+
+    # Step 4: Log in to OpenShift
     - name: Log in to OpenShift
       env:
         OPENSHIFT_API_TOKEN: ${{ secrets.OPENSHIFT_API_TOKEN }}  # Your OpenShift API Token stored in repository secrets
       run: |
         oc login --token=$OPENSHIFT_API_TOKEN --server=https://api.sandbox-m3.1530.p1.openshiftapps.com:6443
 
+    # Step 5: Set the OpenShift project namespace
     - name: Set OpenShift Project
       run: |
         oc project sudeepcv007-dev  # Replace this with your actual OpenShift project namespace
 
+    # Step 6: Deploy resources to OpenShift
     - name: Deploy to OpenShift
       run: |
         oc apply -f k8s-openshift/
 
+    # Step 7: Verify the deployment rollout
     - name: Verify Deployment Rollout
       run: |
         oc rollout status deployment/watchworth-frontend
