@@ -44,7 +44,7 @@ jobs:
     - name: Build and Push Multi-Platform Docker Image
       run: |
         docker buildx create --use
-        docker buildx build --platform linux/amd64,linux/arm64 -t ${{ secrets.DOCKERHUB_USERNAME }}/watchworth-backend:latest --push .
+        docker buildx build --platform linux/amd64,linux/arm64 -t ${{ secrets.DOCKERHUB_USERNAME }}/watchworthreact:latest --push .
 
     # Step 4: Log in to OpenShift
     - name: Log in to OpenShift
